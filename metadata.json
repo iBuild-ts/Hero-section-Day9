@@ -1,0 +1,6 @@
+{
+  "name": "wealth Cock",
+  "description": "An immersive luxury cocktail experience featuring interactive recipes, background video elements, a bespoke drag-and-drop collage builder, and a personalized flavor profile generator.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
