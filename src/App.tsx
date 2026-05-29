@@ -15,6 +15,7 @@ export default function App() {
   const [muted, setMuted] = useState<boolean>(true);
   const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
   const [headerScrolled, setHeaderScrolled] = useState<boolean>(false);
+  const [revealText, setRevealText] = useState<boolean>(false);
 
   // Monitor master scroll metrics
   const { scrollY } = useScroll();
@@ -70,6 +71,13 @@ export default function App() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setRevealText(true);
+    }, 5000);
+    return () => clearTimeout(timer);
+  }, []);
+
   const toggleSound = () => {
     setMuted(!muted);
   };
@@ -89,7 +97,7 @@ export default function App() {
               <span className="font-display font-black text-xs text-gold-300">W</span>
             </div>
             <span className="font-display font-black tracking-[0.2em] text-lg text-white group-hover:text-gold-300 transition-colors uppercase">
-              wealth <span className="text-gold-400 font-serif italic font-normal lowercase">Cock</span>
+              wealth <span className="text-gold-400 font-serif italic font-normal lowercase">cock</span>
             </span>
           </a>
 
@@ -187,51 +195,100 @@ export default function App() {
       {/* Hero Section with Beautiful Animated video */}
       <header className="relative h-[100vh] w-full flex items-center justify-center overflow-hidden">
         
-        {/* Background video loop */}
-        <div className="absolute inset-0 z-0 bg-black">
+        {/* Background video loop with high-fidelity creative lighting */}
+        <div className="absolute inset-0 z-0 bg-[#050505]">
           <video
             autoPlay
             loop
             muted={muted}
             playsInline
             src="https://www.image2url.com/r2/default/videos/1780039434112-c3fc575b-42f5-433f-a667-20c19088afd2.mp4"
-            className="w-full h-full object-cover opacity-60"
+            className="w-full h-full object-cover opacity-80 saturate-[1.12] contrast-[1.08] filter"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#080808]/40 via-luxury-black/60 to-luxury-black pointer-events-none" />
+          {/* Creative, vibrant lighting: a radial vignette that makes the warm liquids pop, blended with gentle top-to-bottom shading */}
+          <div className="absolute inset-0 bg-radial-[circle_at_center] from-transparent via-black/25 to-black/80 pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#050505]/45 via-transparent to-[#050505] pointer-events-none" />
+          
+          {/* Soft amber thermal aura blooming behind the key headline content for high-contrast presentation */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[65vw] h-[50vh] bg-amber-500/10 blur-[120px] rounded-full pointer-events-none" />
         </div>
 
         {/* Hero Copy (Stretched/Spacious layout) */}
         <motion.div 
           style={{ opacity: heroTextOpacity, y: heroTextY }}
-          className="relative z-10 max-w-4xl mx-auto px-6 text-center space-y-8 mt-12"
+          className="relative z-10 max-w-4xl mx-auto px-6 text-center mt-12 w-full min-h-[450px] flex items-center justify-center"
         >
-          <span className="text-gold-400 font-display text-[10px] tracking-[0.3em] uppercase block font-medium">A GENTLEMAN & LADY'S LIQUID GASTRONOMY</span>
+          <AnimatePresence mode="wait">
+            {!revealText ? (
+              <motion.div
+                key="distill-loader"
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 1.3, filter: "blur(15px)" }}
+                transition={{ 
+                  duration: 1.2,
+                  ease: "easeOut"
+                }}
+                className="flex flex-col items-center gap-4 text-center cursor-default select-none"
+              >
+                <div className="relative w-16 h-16 flex items-center justify-center">
+                  <div className="absolute inset-0 rounded-full border border-gold-500/25 animate-ping pointer-events-none" style={{ animationDuration: '3s' }} />
+                  <div className="absolute inset-1 rounded-full border border-dashed border-gold-400/30 animate-spin pointer-events-none" style={{ animationDuration: '10s' }} />
+                  <div className="w-8 h-8 rounded-full bg-gold-950/40 border border-gold-400/50 flex items-center justify-center text-gold-300 font-mono font-bold text-[10px]">
+                    W
+                  </div>
+                </div>
+                <div className="space-y-1">
+                  <span className="text-[10px] uppercase tracking-[0.3em] text-gold-400 font-mono block animate-pulse">Infusing Botanical Spirits...</span>
+                  <p className="text-[10px] text-zinc-500 tracking-wider">Unveiling physical gastronomy shortly</p>
+                </div>
+              </motion.div>
+            ) : (
+              <motion.div
+                key="hero-text-content"
+                initial={{ opacity: 0, scale: 0.2, y: 180, filter: "blur(35px)" }}
+                animate={{ opacity: 1, scale: 1, y: 0, filter: "blur(0px)" }}
+                exit={{ opacity: 0, y: -30 }}
+                transition={{ 
+                  opacity: { duration: 1.4, ease: "easeOut" },
+                  scale: { type: "spring", stiffness: 60, damping: 11, mass: 0.95 },
+                  y: { type: "spring", stiffness: 65, damping: 12, mass: 1 },
+                  filter: { duration: 1.6, ease: "easeOut" }
+                }}
+                className="space-y-8 flex flex-col items-center justify-center w-full"
+              >
+                <span className="text-gold-400 font-display text-[10px] tracking-[0.35em] uppercase block font-semibold">
+                  A GENTLEMAN & LADY'S LIQUID GASTRONOMY
+                </span>
 
-          <h1 className="text-5xl md:text-8xl font-display font-black uppercase text-white tracking-[0.2em] leading-none">
-            wealth <br />
-            <span className="gold-gradient-text font-serif italic tracking-[0.1em] lowercase py-2 block">Cock</span>
-          </h1>
+                <h1 className="text-5xl md:text-8xl font-display font-black uppercase text-white tracking-[0.2em] leading-none">
+                  wealth <br />
+                  <span className="gold-gradient-text font-serif italic tracking-[0.1em] lowercase py-2 block">cock</span>
+                </h1>
 
-          <div className="w-20 h-0.5 bg-gradient-to-r from-transparent via-gold-400 to-transparent mx-auto" />
+                <div className="w-16 h-px bg-gradient-to-r from-transparent via-gold-400/50 to-transparent mx-auto" />
 
-          <p className="text-zinc-300 text-sm md:text-lg font-light tracking-wide max-w-2xl mx-auto leading-relaxed">
-            Welcome to a world of liquid luxury. Indulge in our trilogy of signature flavors, blend your custom recipe canvas, and discover your personal sensory state.
-          </p>
+                <p className="text-zinc-200 text-sm md:text-base font-light tracking-wide max-w-2xl mx-auto leading-relaxed">
+                  Every taste has a temperature, a texture, a memory. We blend cold-pressed botanical extracts with rare, single-batch spirits to explore genuine, tactile drink design. Savor the trilogy, compose your flavor collage, or let intuition guide your glass.
+                </p>
 
-          <div className="pt-6 flex flex-col sm:flex-row gap-4 items-center justify-center">
-            <a
-              href="#showcase"
-              className="px-8 py-4 bg-transparent border-2 border-gold-400 text-gold-300 hover:text-white hover:border-white rounded-xl text-xs md:text-sm font-display tracking-widest uppercase transition-all duration-300 cursor-pointer flex items-center gap-2"
-            >
-              Meet the Show <ArrowDown className="w-4 animate-bounce" />
-            </a>
-            <a
-              href="#profile"
-              className="px-8 py-4 bg-gradient-to-r from-gold-500 to-gold-650 text-luxury-black font-display font-medium rounded-xl text-xs md:text-sm tracking-widest uppercase transition-transform hover:scale-102 cursor-pointer shadow-lg shadow-gold-500/10 flex items-center gap-1.5"
-            >
-              Find Your Flavor <Sparkles className="w-4" />
-            </a>
-          </div>
+                <div className="pt-4 flex flex-col sm:flex-row gap-4 items-center justify-center">
+                  <a
+                    href="#showcase"
+                    className="px-8 py-4 bg-transparent border border-white/20 hover:border-gold-400 text-zinc-300 hover:text-white rounded-xl text-xs font-display tracking-widest uppercase transition-all duration-300 cursor-pointer flex items-center gap-2"
+                  >
+                    Explore the Trilogy <ArrowDown className="w-3.5 animate-bounce" />
+                  </a>
+                  <a
+                    href="#profile"
+                    className="px-8 py-4 bg-gradient-to-r from-gold-400 to-gold-600 hover:from-gold-350 hover:to-gold-500 text-black font-display font-semibold rounded-xl text-xs tracking-widest uppercase transition-all hover:scale-105 hover:shadow-xl hover:shadow-gold-500/10 cursor-pointer flex items-center gap-1.5"
+                  >
+                    Find Your Blend <Sparkles className="w-3.5" />
+                  </a>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </motion.div>
 
         {/* Ambient indicator */}
@@ -369,7 +426,7 @@ export default function App() {
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8 text-center md:text-left">
           
           <div className="space-y-3">
-            <h4 className="font-display font-medium text-white tracking-[0.25em] text-sm uppercase">wealth <span className="text-gold-400 font-serif italic lowercase">Cock</span></h4>
+            <h4 className="font-display font-medium text-white tracking-[0.25em] text-sm uppercase">wealth <span className="text-gold-400 font-serif italic lowercase">cock</span></h4>
             <div className="text-xs space-y-1">
               <p>© {new Date().getFullYear()} Wealth Cocktails Inc. Reserved for absolute luxury.</p>
               <p className="font-mono text-[10px] text-zinc-650">Coordinates: PARIS • TOKYO • NEW YORK • MILAN</p>
